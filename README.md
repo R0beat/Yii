@@ -234,7 +234,7 @@ _Se encarga de gestionar  la autenticación de los usuarios y paere de los permi
 	    $this->render('login',array('model'=>$model));
 }
 ```
-## Modelo del formulario
+## Modelo del formulario 📃
 ```
 public function login(){
 	if($this->_identity==null){
@@ -243,7 +243,10 @@ public function login(){
 		//Si le des permisos o no al usuario
 		$this->_identity->authenticate();
 	}
+	//Si no hubo errores 
 	if($this->_identity->errorCode===UserIdentity::ERROR_NONE){
+		//Se ejecuta estas acciones
+		//remeberMe si checkeo la casilla de mantenerse logeado 
 		$duration=$this->remeberMe ? 3600*24*30 : 0;
 		Yii::app()->user->login($this->_indetity,$duration);
 		return true;
@@ -252,4 +255,5 @@ public function login(){
 		return false;
 }
 ```
+* [Iconos](https://es.piliapp.com/twitter-symbols/) 🔘
 
