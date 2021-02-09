@@ -15,19 +15,7 @@ Yinclude(Yii::getPathOfAlias('application','nomClase.php'));
 $me = new nomClase;
 echo $me -> saludo();
 ```
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 ## Creamos un modelo 👨‍💻
-=======
-# Creamos un modelo 
->>>>>>> cd0d0624b61d2040ca207029f2a071ba2ae3636d
-=======
-# Creamos un modelo 
->>>>>>> cd0d0624b61d2040ca207029f2a071ba2ae3636d
-=======
-# Creamos un modelo 
->>>>>>> cd0d0624b61d2040ca207029f2a071ba2ae3636d
 ```
  <?php 
  	class Tabla extends CActiveRecord{ //Importante Extender la classe CActiveRecord 
@@ -110,7 +98,6 @@ public function create(){
 		$this->redirect(array("index")); //Nos redirecciona a la vista index
 	}
 ```
-
 ## Path Alias 📂
 ```
 echo Yii::getPathOfAlias('application') //📂protected
@@ -165,3 +152,4 @@ _Accedemos al componete desde el controlador_
 		}
 	}
 ```
+
