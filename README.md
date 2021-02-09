@@ -15,7 +15,7 @@ Yinclude(Yii::getPathOfAlias('application','nomClase.php'));
 $me = new nomClase;
 echo $me -> saludo();
 ```
-# Creamos un modelo
+# Creamos un modelo 👁️
 ```
  <?php 
  	class Tabla extends CActiveRecord{ //Importante Extender la classe CActiveRecord 
