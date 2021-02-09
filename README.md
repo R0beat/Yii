@@ -27,7 +27,7 @@ echo $me -> saludo();
  		}
  	}
  ```
-# 👁️👁️ LOS CONTROLADORES TIENE ACCIONES (SON MÈTODOS CON EL PREFIJO ACTION PUEDEN RECIBIR O NO RECIBIR PARAMETROS)
+## 👁️👁️ LOS CONTROLADORES TIENE ACCIONES (SON MÉTODOS CON EL PREFIJO ACTION PUEDEN RECIBIR O NO RECIBIR PARAMETROS)
 ## Creamos el controlador
 ```
 <?php
@@ -130,7 +130,7 @@ _Creamos un alias para nuestro directorio_
 _Creamos el componente  "📂protected📂extension📂NombreComponente.php"_
 ```
 <?php
-//Para crear un componente extendemos la clase CAplicationsComponents
+//Para crear un componente extendemos la clase CAplicationsComponent
 	class Componente extends CAplicationsComponents{
 		//Declaramos las funciones que queremos que se ejecuten
 		public function init(){
@@ -142,7 +142,7 @@ _Creamos el componente  "📂protected📂extension📂NombreComponente.php"_
 		}
 	}
 ```
-_Accedemos al componete desde el controlador_
+_Accedemos al componete desde el controlador_ 💻
 ```
 <?php
 //Extendemos la Clase Controller
@@ -151,5 +151,105 @@ _Accedemos al componete desde el controlador_
 			echo Yii::app()->alias->accion();
 		}
 	}
+```
+_component request_
+```
+		echo Yii::app()->request->baseUrl.'<br>'; //📂root
+		echo Yii::app()->request->requestUri.'<br>';📂path_actual
+		echo Yii::app()->request->pathInfo.'<br>';📂carpeta_actual
+		echo Yii::app()->request->urlReferrer.'<br>';
+		echo Yii::app()->request->queryString.'<br>';📂Muestra en uns string una consulta
+```
+# Exportar a Excel 📗
+```
+<?php
+//Extendemos la Clase Controller
+	class TablaController extends Controller{
+		public function actionIndex(){
+			$model =Countries::model()->findAll();
+			$content=$this->renderPartial("vista",array("model"=>$model),true);
+			Yii::app()->request->sendFile("archivo.xls",$content);
+		}
+	}
+//Vista EXCEL
+<table>
+	<tr>
+		<td>campo1</td>
+		<td>campo2</td>
+		<td>campo3</td>
+	</tr>
+	<?php foreach($model as $data): ?>
+		<tr>
+			<td><?php echo $data->valor1;</td>
+			<td><?php echo $data->valor2;</td>
+			<td><?php echo $data->valor3;</td>
+		</tr>
+	<?php endforeach; ?>
+
+</table>	
+```
+## Component user 🙎‍♂️
+_Se encarga de gestionar  la autenticación de los usuarios y paere de los permisos_
+```
+<?php
+//Extendemos la Clase Controller
+	class TablaController extends Controller{
+		public function actionIndex(){
+			if(!Yii::app()->user->isGuest){
+				//Si el usuario esta logeado
+					Yii::app()->user->setFlash("success","Mensaje");
+				//Si queremos guardar la variable de sesión
+					Yii::app()->user->setState("MyVarSession","variable");
+					Yii::app()->user->getState("MyVarSession");
+				//Verificamos si hay una variable de sesiòn
+					Yii::app()->user->hasState("MyVarSession");
+				//Para logear a un usuario y el tiempo que durara la sesión
+					Yi::app()->user->login(CUserIdentity,360*4);
+				//Para cerrar sesión del usuario
+					Yii::app()->user->logout();
+			}
+		}
+	}
+```
+## Funcionamiento de un login 👨‍💻
+```
+<?php
+ public function actionLogin(){
+  	//Instancianos al formulario
+        $model = new LoginForm();
+        // Si es una solicitud de validacion ajax
+	        if (isset($_POST['ajax']) && $_POST['ajax']==='login-form') {
+	            echo CativeForm::validate($model);
+	            Yii::app()->end();
+	        }
+	    //Si la validación es correcta pasa al formulario
+	        if(isset($_POST['LoginForm'])){
+	        	//Hacen set los campos del formuulario
+	        		$model->attributes=$_POST['LoginForm'];
+	        	//Valida los datos y redirigir a la página anterior si es valida	
+	        		if($model->validate() && $model->login()){
+	        			$this->redirect(Yii::app()->user->returnUrl);
+	        		} 
+	    	}
+	    $this->render('login',array('model'=>$model));
+}
+```
+## Modelo del formulario
+```
+public function login(){
+	if($this->_identity==null){
+		//Creamos una instancia UserIdentity le pasamos los atributos del modelo dell formulariow
+		$this->_identity=new UserIdentity($this->password);
+		//Si le des permisos o no al usuario
+		$this->_identity->authenticate();
+	}
+	if($this->_identity->errorCode===UserIdentity::ERROR_NONE){
+		$duration=$this->remeberMe ? 3600*24*30 : 0;
+		Yii::app()->user->login($this->_indetity,$duration);
+		return true;
+	}
+	else
+		return false;
+}
 ```
 
