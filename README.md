@@ -286,6 +286,6 @@ Contine una seria de arreglos con los permisos que tenemos nosotros
 			),
 		);
 	}
-```cd 
+```
 * [Iconos](https://es.piliapp.com/twitter-symbols/) 🔘
 
