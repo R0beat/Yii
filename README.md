@@ -105,7 +105,7 @@ echo Yii::getPathOfAlias('webroot') //📂root directorio principal
 echo Yii::getPathOfAlias('ext') //📂protected📂extension
 echo Yii::getPathOfAlias('zii') //📂framework📂zii
 ```
-_En el archivo de configuracin main descomentamos esta linea para crear nuesttros propios alias_
+_En el archivo de configuración main descomentamos esta linea para crear nuesttros propios alias_
 ```
 // uncomment the following to define a path alias
 	 Yii::setPathOfAlias('local','path/to/local-folder');
@@ -160,7 +160,7 @@ _component request_
 		echo Yii::app()->request->urlReferrer.'<br>';
 		echo Yii::app()->request->queryString.'<br>';📂Muestra en uns string una consulta
 ```
-# Exportar a Excel 📗
+## Exportar a Excel 📗
 ```
 <?php
 //Extendemos la Clase Controller
@@ -189,7 +189,7 @@ _component request_
 </table>	
 ```
 ## Component user 🙎‍♂️
-_Se encarga de gestionar  la autenticación de los usuarios y paere de los permisos_
+_Se encarga de gestionar la autenticación de los usuarios y paere de los permisos_
 ```
 <?php
 //Extendemos la Clase Controller
@@ -255,5 +255,37 @@ public function login(){
 		return false;
 }
 ```
+## Permisos 
+_Yii nos ofrce un control de acceso por acciones_
+Contine una seria de arreglos con los permisos que tenemos nosotros
+```
+	public function accessRules() {
+		return array(
+			// allow all users to perform 'index' and 'view' actions
+			array('allow',  el primer valor es el que te permite o deniega la acción
+				'controllers'=>array('users',''),
+				'actio0ns'=>array('index','view'),
+				'users'=>array('?' o 'Usuario_especifico'),//usuarios anonimos o podems especificar un usuario en especifico 
+				'ips'=>array('las ipas que no tendran acceso'),
+				'verbs'=> array('PUT','GET','POST','DELETE') //PODEMOS RESTRINGIR DISTINTAS PETICIONES
+				'expresion'=>function($user,$rule){return $user->id==1;}, //reglas de acceso
+				'roles'=>array('Nombre del usuario que le vas a dar permiso')
+			),
+			// allow authenticated user to perform 'create' and 'update' actions
+			array('allow', 
+				'actions'=>array('create','update'),
+				'users'=>array('@'), //usuarios logeados
+			),
+			// allow admin actions
+			array('allow', 
+				'actions'=>array('admin','delete'),
+				'users'=>array('admin'),
+			),
+			array('deny',  // deny all users
+				'users'=>array('*'), // todos los usuarios
+			),
+		);
+	}
+```cd 
 * [Iconos](https://es.piliapp.com/twitter-symbols/) 🔘
 
